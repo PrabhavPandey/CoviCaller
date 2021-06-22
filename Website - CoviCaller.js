@@ -76,3 +76,48 @@ export function text71_viewportEnter(event) {
   $w("#PreLoad").hide();
 
 }
+
+export function SelectDrop(event) {
+  $w("#ServiceDrop").disable()
+  console.log( $w("#SelectDrop").value)
+  const val=$w("#SelectDrop").value
+  if (val == 'Services'){
+    $w("#ServiceDrop").enable()
+    $w("#ServiceDrop").expand()
+  }
+  else if (val=='Number'){
+    console.log(val)
+    $w("#ServiceDrop").collapse()
+    $w("#anchor9").scrollTo()
+    $w("#VerifyGroup").expand()
+
+  }
+}
+
+export function ServiceDrop_click(event) {
+  $w("#ServiceDrop").onClick( (event) => {
+   $w("#SelectDrop").selectedIndex=1
+  console.log( $w("#ServiceDrop").value)
+  const val=$w("#ServiceDrop").value
+
+} );
+}
+export function ShowTable_click(event) {
+  $w('#TableAnchor').scrollTo()
+  wixData.query("medicalQuestionnaire") 
+  .contains("copyOfYourName", $w('#ServiceDrop').value)  
+  .find()  // Run the query
+  .then(res => {
+    if (res.items.length == 0) {  
+      $w("#EmpTxt").show();
+      $w("#ResultTable").collapse();  
+    }
+    else {
+       
+      console.log(res)
+      $w("#EmpTxt").hide();
+      $w("#ResultTable").rows = res.items;
+      $w("#ResultTable").expand()
+    }});
+    $w("#ServiceDrop").collapse()
+ }
